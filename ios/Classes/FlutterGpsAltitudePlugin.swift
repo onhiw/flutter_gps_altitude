@@ -36,15 +36,16 @@ public class FlutterGpsAltitudePlugin: NSObject, FlutterPlugin, CLLocationManage
     if let location = locations.last {
       let altitude = location.altitude
       let accuracy = location.verticalAccuracy
+      let ellipsoidalAltitude = location.ellipsoidalAltitude
 
       if #available(iOS 13.4, *) {
         if let source = location.sourceInformation, source.isSimulatedBySoftware == false {
-          resultCallback?(["altitude": altitude, "accuracy": accuracy])
+          resultCallback?(["altitude": altitude, "ellipsoidalAltitude": ellipsoidalAltitude, "accuracy": accuracy])
           resultCallback = nil
           locationManager?.stopUpdatingLocation()
         }
       } else {
-        resultCallback?(["altitude": altitude, "accuracy": accuracy])
+        resultCallback?(["altitude": altitude, "ellipsoidalAltitude": ellipsoidalAltitude, "accuracy": accuracy])
         resultCallback = nil
         locationManager?.stopUpdatingLocation()
       }
